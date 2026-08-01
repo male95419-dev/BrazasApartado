@@ -2,8 +2,8 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>POS, Control Domiciliario & Actas de Cierre - Cocina Oculta</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Brazas Apartadó - POS, Domicilios & Cierre de Caja</title>
     <!-- FontAwesome, Chart.js & Tesseract OCR -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -21,28 +21,28 @@
             --ai-purple: #8b5cf6;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; -webkit-tap-highlight-color: transparent; }
         body { background: var(--bg); color: #1e293b; display: flex; height: 100vh; overflow: hidden; }
 
         .sidebar { width: 260px; background: var(--primary); color: white; padding: 16px; display: flex; flex-direction: column; justify-content: space-between; flex-shrink: 0; }
         .brand { font-size: 1.05rem; font-weight: 700; color: var(--accent); display: flex; align-items: center; gap: 10px; margin-bottom: 20px; }
         .menu { list-style: none; display: flex; flex-direction: column; gap: 6px; }
-        .menu a { color: #94a3b8; text-decoration: none; padding: 10px 12px; border-radius: 8px; display: flex; align-items: center; gap: 10px; font-size: 0.88rem; transition: 0.2s; }
+        .menu a { color: #94a3b8; text-decoration: none; padding: 12px; border-radius: 8px; display: flex; align-items: center; gap: 10px; font-size: 0.9rem; transition: 0.2s; min-height: 44px; }
         .menu a:hover, .menu a.active { background: #1e293b; color: white; }
 
-        .main { flex: 1; overflow-y: auto; display: flex; flex-direction: column; }
+        .main { flex: 1; overflow-y: auto; display: flex; flex-direction: column; width: 100%; }
         .topbar { background: var(--surface); padding: 12px 20px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
         .content { padding: 20px; }
 
         .ai-panel { width: 300px; background: var(--surface); border-left: 1px solid var(--border); display: flex; flex-direction: column; flex-shrink: 0; }
         .ai-header { padding: 12px 16px; border-bottom: 1px solid var(--border); background: #f1f5f9; font-weight: 700; font-size: 0.85rem; display: flex; justify-content: space-between; align-items: center; }
         .ai-chat-box { flex: 1; padding: 12px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
-        .chat-msg { padding: 8px 12px; border-radius: 8px; font-size: 0.82rem; max-width: 90%; line-height: 1.4; }
+        .chat-msg { padding: 8px 12px; border-radius: 8px; font-size: 0.82rem; max-width: 90%; line-height: 1.4; word-break: break-word; }
         .chat-msg.user { background: var(--blue); color: white; align-self: flex-end; }
         .chat-msg.ai { background: #f1f5f9; color: #1e293b; align-self: flex-start; border: 1px solid var(--border); }
         .ai-input-area { padding: 10px; border-top: 1px solid var(--border); display: flex; gap: 6px; }
 
-        .btn { background: var(--blue); color: white; border: none; padding: 8px 12px; border-radius: 6px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; font-size: 0.85rem; }
+        .btn { background: var(--blue); color: white; border: none; padding: 10px 14px; border-radius: 6px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 6px; font-size: 0.88rem; min-height: 44px; touch-action: manipulation; }
         .btn-accent { background: var(--accent); color: #000; }
         .btn-ai { background: var(--ai-purple); }
         .btn-danger { background: var(--danger); }
@@ -56,10 +56,10 @@
 
         .panel { background: var(--surface); border-radius: 8px; border: 1px solid var(--border); padding: 16px; margin-bottom: 20px; }
         table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-        th, td { padding: 8px 10px; text-align: left; border-bottom: 1px solid var(--border); font-size: 0.82rem; }
+        th, td { padding: 10px; text-align: left; border-bottom: 1px solid var(--border); font-size: 0.85rem; }
         th { background: #f1f5f9; color: #475569; font-weight: 700; }
 
-        .badge { padding: 3px 8px; border-radius: 12px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; }
+        .badge { padding: 4px 8px; border-radius: 12px; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; }
         .badge-ok { background: #d1fae5; color: #047857; }
         .badge-alert { background: #fee2e2; color: #b91c1c; }
         .badge-pending { background: #fef3c7; color: #d97706; }
@@ -69,25 +69,27 @@
 
         .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.6); display: none; justify-content: center; align-items: center; z-index: 1000; }
         .modal-box { background: white; padding: 20px; border-radius: 8px; width: 100%; max-width: 480px; max-height: 90vh; overflow-y: auto; }
-        .form-group { margin-bottom: 10px; }
-        .form-group label { display: block; font-size: 0.78rem; font-weight: 600; margin-bottom: 4px; }
-        .form-group input, .form-group select { width: 100%; padding: 8px; border: 1px solid var(--border); border-radius: 4px; font-size: 0.85rem; }
+        .form-group { margin-bottom: 12px; }
+        .form-group label { display: block; font-size: 0.8rem; font-weight: 600; margin-bottom: 4px; }
+        .form-group input, .form-group select { width: 100%; padding: 10px; border: 1px solid var(--border); border-radius: 6px; font-size: 0.9rem; min-height: 44px; }
 
         .card-delivery { background: #ffffff; border: 2px solid var(--border); border-radius: 8px; padding: 14px; margin-bottom: 12px; }
         .card-delivery.en-camino { border-color: var(--accent); background: #fffbebfb; }
 
-        /* Estilo Modo Domiciliario Celular Límpio */
-        body.modo-domiciliario .sidebar,
-        body.modo-domiciliario .topbar,
-        body.modo-domiciliario .ai-panel { display: none !important; }
-        body.modo-domiciliario .main { width: 100% !important; }
-        body.modo-domiciliario .content { padding: 10px !important; }
+        /* VISTA DINÁMICA INTELIGENTE EN CELULAR (Cliente y Domiciliario) */
+        body.modo-limpio .sidebar,
+        body.modo-limpio .topbar,
+        body.modo-limpio .ai-panel { display: none !important; }
+        body.modo-limpio .main { width: 100% !important; height: 100vh !important; }
+        body.modo-limpio .content { padding: 12px !important; }
 
         @media (max-width: 900px) {
-            body { flex-direction: column; overflow-y: auto; }
-            .sidebar { width: 100%; height: auto; }
-            .ai-panel { width: 100%; height: 280px; border-left: none; border-top: 1px solid var(--border); }
+            body { flex-direction: column; overflow-y: auto; height: auto; }
+            .sidebar { width: 100%; height: auto; padding: 10px; }
+            .menu { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+            .ai-panel { width: 100%; height: 320px; border-left: none; border-top: 1px solid var(--border); }
             .main { height: auto; }
+            .content { padding: 10px; }
         }
 
         @media print {
@@ -103,29 +105,30 @@
     <!-- MENÚ LATERAL INTEGRADO -->
     <div class="sidebar">
         <div>
-            <div class="brand"><i class="fa-solid fa-drumstick-bite"></i> Carnes POS Master</div>
+            <div class="brand"><i class="fa-solid fa-fire-burner"></i> Brazas Apartadó POS</div>
             <ul class="menu">
-                <li><a href="#" class="active" id="link-comandas" onclick="switchTab('comandas', this)"><i class="fa-solid fa-receipt"></i> Comandas Domicilio</a></li>
-                <li><a href="#" id="link-arqueo" onclick="switchTab('arqueo', this)"><i class="fa-solid fa-lock" style="color: var(--accent);"></i> Acta Cierre de Caja Fija</a></li>
-                <li><a href="#" id="link-portal_domiciliario" onclick="switchTab('portal_domiciliario', this)"><i class="fa-solid fa-motorcycle"></i> Vista Domiciliario (App)</a></li>
-                <li><a href="#" onclick="switchTab('dashboards', this)"><i class="fa-solid fa-chart-pie"></i> Balance General</a></li>
-                <li><a href="#" onclick="switchTab('egresos_diarios', this)"><i class="fa-solid fa-wallet"></i> Ingresos & Egresos Diarios</a></li>
-                <li><a href="#" onclick="switchTab('inventario', this)"><i class="fa-solid fa-boxes-stacked"></i> Stock Carnes & Plásticos</a></li>
-                <li><a href="#" onclick="switchTab('catalogo', this)"><i class="fa-solid fa-share-nodes"></i> Enlace Menú Cliente</a></li>
-                <li><a href="#" onclick="switchTab('scanner', this)"><i class="fa-solid fa-camera"></i> Escáner Facturas OCR</a></li>
-                <li><a href="#" onclick="switchTab('productos', this)"><i class="fa-solid fa-utensils"></i> Menú & Márgenes</a></li>
-                <li><a href="#" onclick="switchTab('config', this)"><i class="fa-solid fa-sliders"></i> IA & Ajustes</a></li>
+                <li><a href="javascript:void(0)" class="active" id="link-comandas" onclick="navegarA('comandas')"><i class="fa-solid fa-receipt"></i> Comandas Domicilio</a></li>
+                <li><a href="javascript:void(0)" id="link-arqueo" onclick="navegarA('arqueo')"><i class="fa-solid fa-lock" style="color: var(--accent);"></i> Acta Cierre de Caja Fija</a></li>
+                <li><a href="javascript:void(0)" id="link-portal_domiciliario" onclick="navegarA('portal_domiciliario')"><i class="fa-solid fa-motorcycle"></i> Vista Domiciliario (App)</a></li>
+                <li><a href="javascript:void(0)" onclick="navegarA('dashboards')"><i class="fa-solid fa-chart-pie"></i> Balance General</a></li>
+                <li><a href="javascript:void(0)" onclick="navegarA('egresos_diarios')"><i class="fa-solid fa-wallet"></i> Ingresos & Egresos Diarios</a></li>
+                <li><a href="javascript:void(0)" onclick="navegarA('inventario')"><i class="fa-solid fa-boxes-stacked"></i> Stock Carnes & Plásticos</a></li>
+                <li><a href="javascript:void(0)" onclick="navegarA('catalogo')"><i class="fa-solid fa-share-nodes"></i> Enlace Menú Cliente</a></li>
+                <li><a href="javascript:void(0)" onclick="navegarA('scanner')"><i class="fa-solid fa-camera"></i> Escáner Facturas OCR</a></li>
+                <li><a href="javascript:void(0)" onclick="navegarA('productos')"><i class="fa-solid fa-utensils"></i> Menú & Márgenes</a></li>
+                <li><a href="javascript:void(0)" onclick="navegarA('config')"><i class="fa-solid fa-sliders"></i> IA & Ajustes</a></li>
             </ul>
         </div>
-        <div style="font-size: 0.7rem; color: #64748b; text-align: center;">Control Total v15.0 COP</div>
+        <div style="font-size: 0.7rem; color: #64748b; text-align: center;">Brazas Apartadó v19.0 COP</div>
     </div>
 
     <!-- ÁREA PRINCIPAL -->
     <div class="main">
         <div class="topbar">
-            <h3 id="title-page">Gestión de Domicilios & Control de Entregas</h3>
+            <h3 id="title-page">Brazas Apartadó - Control de Entregas</h3>
             <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-                <button class="btn btn-accent" onclick="copiarLinkDomiciliario()"><i class="fa-solid fa-motorcycle"></i> Copiar Link Domiciliario</button>
+                <button class="btn btn-accent" onclick="openModalNuevaComanda()"><i class="fa-solid fa-plus"></i> Nueva Comanda POS</button>
+                <button class="btn btn-blue" onclick="copiarLinkDomiciliario()"><i class="fa-solid fa-motorcycle"></i> Copiar Link Domiciliario</button>
                 <button class="btn btn-success" onclick="copiarLinkMenu()"><i class="fa-solid fa-link"></i> Link para Clientes</button>
                 <button class="btn btn-outline" onclick="exportarExcelTotal()"><i class="fa-solid fa-file-excel"></i> Exportar Excel</button>
             </div>
@@ -136,21 +139,26 @@
             <!-- TAB 1: COMANDAS -->
             <div id="comandas" class="tab-content active">
                 <div class="panel">
-                    <h4>Comandas Activas para Entrega (Gestión del Administrador)</h4>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Cliente</th>
-                                <th>Método Pago</th>
-                                <th>Dirección de Entrega</th>
-                                <th>Estado Entrega</th>
-                                <th>Total (COP)</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tabla-comandas"></tbody>
-                    </table>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                        <h4>Comandas Activas para Entrega (Gestión del Administrador)</h4>
+                        <button class="btn btn-accent" onclick="openModalNuevaComanda()"><i class="fa-solid fa-plus"></i> Nueva Comanda POS</button>
+                    </div>
+                    <div style="overflow-x: auto;">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Cliente</th>
+                                    <th>Método Pago</th>
+                                    <th>Dirección de Entrega</th>
+                                    <th>Estado Entrega</th>
+                                    <th>Total (COP)</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabla-comandas"></tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
 
@@ -200,20 +208,22 @@
                     </div>
 
                     <h4 style="margin-top: 25px;">📜 Historial de Actas de Cierre Saldadas (Congeladas)</h4>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>N° Acta</th>
-                                <th>Fecha Cierre</th>
-                                <th>Ventas Efectivo</th>
-                                <th>Ventas Transf.</th>
-                                <th>Egresos</th>
-                                <th>Saldo Cierre</th>
-                                <th>Estado</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tabla-actas-congeladas"></tbody>
-                    </table>
+                    <div style="overflow-x: auto;">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>N° Acta</th>
+                                    <th>Fecha Cierre</th>
+                                    <th>Ventas Efectivo</th>
+                                    <th>Ventas Transf.</th>
+                                    <th>Egresos</th>
+                                    <th>Saldo Cierre</th>
+                                    <th>Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabla-actas-congeladas"></tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
 
@@ -221,8 +231,8 @@
             <div id="portal_domiciliario" class="tab-content">
                 <div class="panel" style="max-width: 500px; margin: 0 auto; border: 2px solid var(--accent);">
                     <div style="text-align: center; margin-bottom: 15px;">
-                        <h2>🛵 Portal del Domiciliario</h2>
-                        <p style="font-size: 0.85rem; color: #64748b;">Pantalla optimizada para celular. Gestiona tus entregas y cobros.</p>
+                        <h2>🛵 Portal Domiciliario - Brazas Apartadó</h2>
+                        <p style="font-size: 0.85rem; color: #64748b;">Pantalla para celular. Gestiona entregas y cobros.</p>
                     </div>
                     <div id="contenedor-tarjetas-domiciliario"></div>
                 </div>
@@ -292,17 +302,19 @@
                     </form>
 
                     <h4 style="margin-top: 20px;">Historial de Movimientos Diarios</h4>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Fecha</th>
-                                <th>Tipo</th>
-                                <th>Concepto</th>
-                                <th>Monto (COP)</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tabla-egresos-diarios"></tbody>
-                    </table>
+                    <div style="overflow-x: auto;">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Fecha</th>
+                                    <th>Tipo</th>
+                                    <th>Concepto</th>
+                                    <th>Monto (COP)</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabla-egresos-diarios"></tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
 
@@ -313,21 +325,23 @@
                         <h4>Control de Stock de Carnes e Insumos Plásticos</h4>
                         <button class="btn" onclick="openModal('m-insumo')"><i class="fa-solid fa-plus"></i> Agregar Insumo/Plástico</button>
                     </div>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Item / Insumo</th>
-                                <th>Tipo</th>
-                                <th>Unidad</th>
-                                <th>Stock Actual</th>
-                                <th>Stock Mínimo</th>
-                                <th>Costo Unit. (COP)</th>
-                                <th>Estado / Alerta</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tabla-inventario"></tbody>
-                    </table>
+                    <div style="overflow-x: auto;">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Item / Insumo</th>
+                                    <th>Tipo</th>
+                                    <th>Unidad</th>
+                                    <th>Stock Actual</th>
+                                    <th>Stock Mínimo</th>
+                                    <th>Costo Unit. (COP)</th>
+                                    <th>Estado / Alerta</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabla-inventario"></tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
 
@@ -335,7 +349,7 @@
             <div id="catalogo" class="tab-content">
                 <div class="panel" style="max-width: 580px; margin: 0 auto; border: 2px solid var(--accent);">
                     <div style="text-align: center; margin-bottom: 15px;">
-                        <h2>🥩 Menú de Carnes & Picadas</h2>
+                        <h2>🥩 Brazas Apartadó - Menú Digital</h2>
                         <p style="font-size: 0.85rem; color: #64748b;">Completa tus datos y selecciona tu método de pago</p>
                         <div style="margin-top: 10px; display: flex; justify-content: center; gap: 8px;">
                             <button class="btn btn-accent" onclick="copiarLinkMenu()"><i class="fa-solid fa-copy"></i> Copiar Link del Menú</button>
@@ -352,8 +366,8 @@
                             <input type="text" id="cli-tel" required placeholder="Ej: 573001234567">
                         </div>
                         <div class="form-group">
-                            <label>Dirección Exacta de Domicilio</label>
-                            <input type="text" id="cli-dir" required placeholder="Ej: Calle 15 # 20-30 Apto 402">
+                            <label>Dirección Exacta de Domicilio en Apartadó</label>
+                            <input type="text" id="cli-dir" required placeholder="Ej: Barrio Ortiz Calle 15 # 20-30">
                         </div>
                         <div class="form-group">
                             <label>Método de Pago Preferido</label>
@@ -369,7 +383,7 @@
                         <div style="margin-top: 15px; font-weight: 700; font-size: 1.1rem; text-align: right;">
                             Total: <span id="cli-total-pago">$ 0 COP</span>
                         </div>
-                        <button type="submit" class="btn btn-success" style="width: 100%; justify-content: center; margin-top: 15px; padding: 12px; font-size: 1rem;">
+                        <button type="submit" class="btn btn-success" style="width: 100%; justify-content: center; margin-top: 15px; padding: 14px; font-size: 1rem;">
                             <i class="fa-brands fa-whatsapp"></i> Confirmar y Enviar Pedido
                         </button>
                     </form>
@@ -407,20 +421,22 @@
                         <h4>Análisis de Costos y Margen de Ganancia Por Plato</h4>
                         <button class="btn" onclick="openModalNuevoProducto()"><i class="fa-solid fa-plus"></i> Crear Producto</button>
                     </div>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Plato</th>
-                                <th>Costo Real (COP)</th>
-                                <th>Precio Venta (COP)</th>
-                                <th>Ganancia Bruta (COP)</th>
-                                <th>Margen %</th>
-                                <th>Insumo Asociado</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tabla-productos"></tbody>
-                    </table>
+                    <div style="overflow-x: auto;">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Plato</th>
+                                    <th>Costo Real (COP)</th>
+                                    <th>Precio Venta (COP)</th>
+                                    <th>Ganancia Bruta (COP)</th>
+                                    <th>Margen %</th>
+                                    <th>Insumo Asociado</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabla-productos"></tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
 
@@ -430,7 +446,7 @@
                     <h3>Clave API Gemini IA</h3>
                     <div class="form-group">
                         <label>Gemini API Key</label>
-                        <input type="password" id="api-key-input" placeholder="Pega tu clave aquí...">
+                        <input type="password" id="api-key-input" placeholder="Pega tu clave Gemini aquí...">
                     </div>
                     <button class="btn btn-ai" onclick="guardarAPIKey()"><i class="fa-solid fa-floppy-disk"></i> Guardar Ajustes</button>
                 </div>
@@ -446,7 +462,7 @@
             <span style="font-size: 0.7rem; color: var(--success);">● En Línea</span>
         </div>
         <div class="ai-chat-box" id="chat-box">
-            <div class="chat-msg ai">¡Hola! Tu enlace para el domiciliario está listo para ser compartido.</div>
+            <div class="chat-msg ai">¡Hola! Sistema completamente estabilizado y preparado para tu API Key.</div>
         </div>
         <div class="ai-input-area">
             <input type="text" id="chat-input" placeholder="Pregunta lo que sea..." style="flex:1; padding:8px; border:1px solid var(--border); border-radius:4px; font-size:0.82rem;" onkeypress="if(event.key==='Enter') enviarConsultaIA()">
@@ -566,7 +582,7 @@
     <!-- ÁREA DE IMPRESIÓN UNIVERSAL -->
     <div id="area-impresion-universal">
         <div style="text-align: center; border-bottom: 2px solid #000; padding-bottom: 8px;">
-            <h2>COCINA OCULTA - DESPACHO CARNES</h2>
+            <h2>BRAZAS APARTADÓ - DESPACHOS</h2>
             <p>Servicio de Domicilio Propio</p>
         </div>
         <div style="margin-top: 10px; font-size: 14px; line-height: 1.5;">
@@ -585,11 +601,13 @@
     </div>
 
     <script>
+        const BASE_URL_GITHUB = "https://male95419-dev.github.io/BrazasApartado/";
+
         function formatCOP(valor) {
             return '$ ' + Math.round(valor).toLocaleString('es-CO') + ' COP';
         }
 
-        let productos = JSON.parse(localStorage.getItem('v15_productos')) || [
+        let productos = JSON.parse(localStorage.getItem('v19_productos')) || [
             { id: 1, nombre: "Carne de Res", costo: 15350, precio: 33000, insumoId: 101 },
             { id: 2, nombre: "Carne de Cerdo", costo: 10400, precio: 30000, insumoId: 102 },
             { id: 3, nombre: "Picada Personal", costo: 12875, precio: 45000, insumoId: 201 },
@@ -598,34 +616,36 @@
             { id: 6, nombre: "Chicharrón Crocante", costo: 10400, precio: 29000, insumoId: 102 }
         ];
 
-        let insumos = JSON.parse(localStorage.getItem('v15_insumos')) || [
+        let insumos = JSON.parse(localStorage.getItem('v19_insumos')) || [
             { id: 101, nombre: "Carne de Res (Lomo/Chatas)", tipo: "Materia Prima", unidad: "Kg", stock: 20.0, min: 5.0, costo: 30000 },
             { id: 102, nombre: "Tocino de Cerdo", tipo: "Materia Prima", unidad: "Kg", stock: 15.0, min: 4.0, costo: 22000 },
             { id: 201, nombre: "Caja Térmica Plástica (Empaque)", tipo: "Plástico/Empaque", unidad: "Unid", stock: 100, min: 20, costo: 1200 },
             { id: 202, nombre: "Vaso Guacamole + Salseros Plásticos", tipo: "Plástico/Empaque", unidad: "Unid", stock: 150, min: 30, costo: 500 }
         ];
 
-        let comandas = JSON.parse(localStorage.getItem('v15_comandas')) || [];
-        let egresosDiarios = JSON.parse(localStorage.getItem('v15_egresos_diarios')) || [];
-        let actasCongeladas = JSON.parse(localStorage.getItem('v15_actas_congeladas')) || [];
-        let apiKey = localStorage.getItem('v15_api_key') || '';
+        let comandas = JSON.parse(localStorage.getItem('v19_comandas')) || [];
+        let egresosDiarios = JSON.parse(localStorage.getItem('v19_egresos_diarios')) || [];
+        let actasCongeladas = JSON.parse(localStorage.getItem('v19_actas_congeladas')) || [];
+        let apiKey = localStorage.getItem('v19_api_key') || '';
 
         let tempItemsComanda = [];
         let chartInstance = null;
 
-        function switchTab(tabId, el) {
+        // NAVEGACIÓN DIRECCIONADA Y ROBUSTA
+        function navegarA(tabId) {
+            window.location.hash = '#' + tabId;
+            switchTab(tabId);
+        }
+
+        function switchTab(tabId) {
             document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
             document.querySelectorAll('.menu a').forEach(a => a.classList.remove('active'));
             
             const target = document.getElementById(tabId);
             if(target) target.classList.add('active');
-            
-            if(el) {
-                el.classList.add('active');
-            } else {
-                const linkEl = document.getElementById('link-' + tabId);
-                if(linkEl) linkEl.classList.add('active');
-            }
+
+            const activeLink = document.getElementById('link-' + tabId);
+            if(activeLink) activeLink.classList.add('active');
 
             render();
         }
@@ -633,23 +653,59 @@
         function openModal(id) { document.getElementById(id).style.display = 'flex'; }
         function closeModal(id) { document.getElementById(id).style.display = 'none'; }
 
-        // COPIAR ENLACE DOMICILIARIO
-        function copiarLinkDomiciliario() {
-            const urlCompleta = window.location.href.split('#')[0] + '#portal_domiciliario';
-            navigator.clipboard.writeText(urlCompleta);
-            alert('📱 ¡Enlace del Domiciliario copiado!\n\nEnvíalo a tu repartidor por WhatsApp: ' + urlCompleta);
-        }
-
-        // DETECTAR HASH DE LA URL AL CARGAR
-        function cargarPestanaDesdeURL() {
-            const hash = window.location.hash.replace('#', '');
-            if(hash === 'portal_domiciliario') {
-                document.body.classList.add('modo-domiciliario');
-                switchTab('portal_domiciliario');
-            } else if(hash) {
-                switchTab(hash);
+        // COPIAR ENLACES CON RESPALDO
+        function copiarTextoUniversal(texto, mensajeExito) {
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(texto).then(() => alert(mensajeExito)).catch(() => fallbackCopy(texto, mensajeExito));
+            } else {
+                fallbackCopy(texto, mensajeExito);
             }
         }
+
+        function fallbackCopy(texto, mensajeExito) {
+            const input = document.createElement('input');
+            input.value = texto;
+            document.body.appendChild(input);
+            input.select();
+            document.execCommand('copy');
+            document.body.removeChild(input);
+            alert(mensajeExito);
+        }
+
+        function copiarLinkDomiciliario() {
+            const urlCompleta = BASE_URL_GITHUB + '#portal_domiciliario';
+            copiarTextoUniversal(urlCompleta, '📱 ¡Enlace de Domiciliario copiado!\n\n' + urlCompleta);
+        }
+
+        function copiarLinkMenu() {
+            const urlCliente = BASE_URL_GITHUB + '#catalogo';
+            copiarTextoUniversal(urlCliente, '🥩 ¡Enlace del Menú Digital copiado!\n\n' + urlCliente);
+        }
+
+        function compartirWhatsAppMenu() {
+            const urlCliente = BASE_URL_GITHUB + '#catalogo';
+            const msg = `¡Hola! 👋 Te compartimos el Menú Digital de Brazas Apartadó:\n\n👉 ${urlCliente}`;
+            window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
+        }
+
+        // DETECTAR HASH DE LA URL EN VIVO
+        function cargarPestanaDesdeURL() {
+            const hash = window.location.hash.replace('#', '');
+            
+            if(hash === 'portal_domiciliario' || hash === 'catalogo') {
+                document.body.classList.add('modo-limpio');
+            } else {
+                document.body.classList.remove('modo-limpio');
+            }
+
+            if(hash) {
+                switchTab(hash);
+            } else {
+                switchTab('comandas');
+            }
+        }
+
+        window.addEventListener('hashchange', cargarPestanaDesdeURL);
 
         // CONGELAR CAJA
         function congelarYSaldarCajaDiaria() {
@@ -657,7 +713,7 @@
                 return alert('No hay movimientos en el día para saldar.');
             }
 
-            if(confirm('🔒 ¿Deseas CERRAR Y SALDAR LA CAJA DE HOY? Los balances quedarán congelados.')) {
+            if(confirm('🔒 ¿Deseas CERRAR Y SALDAR LA CAJA DE HOY? Los balances quedarán congelados de forma inmutable.')) {
                 const base = parseFloat(document.getElementById('arq-base').value) || 0;
                 const ventasEfectivo = comandas.filter(c => (c.metodoPago || 'Efectivo') === 'Efectivo' && c.pagoRecibido).reduce((a,c)=>a+c.total,0);
                 const ventasTransf = comandas.filter(c => c.metodoPago === 'Transferencia').reduce((a,c)=>a+c.total,0);
@@ -677,7 +733,7 @@
                 };
 
                 actasCongeladas.push(acta);
-                localStorage.setItem('v15_actas_congeladas', JSON.stringify(actasCongeladas));
+                localStorage.setItem('v19_actas_congeladas', JSON.stringify(actasCongeladas));
 
                 alert(`✅ ¡Caja Saldada Exitosamente! ${acta.numActa}`);
                 render();
@@ -692,7 +748,7 @@
             com.estadoEntrega = estado;
             if(pagoRecibido) com.pagoRecibido = true;
 
-            localStorage.setItem('v15_comandas', JSON.stringify(comandas));
+            localStorage.setItem('v19_comandas', JSON.stringify(comandas));
             render();
         }
 
@@ -710,8 +766,8 @@
             pendientes.forEach(c => {
                 const esEfectivo = (c.metodoPago || 'Efectivo') === 'Efectivo';
                 const btnCobro = esEfectivo ? 
-                    `<button class="btn btn-success" style="width:100%; margin-top:8px; justify-content:center;" onclick="marcarEntregaDomiciliario('${c.id}', 'Entregado', true)"><i class="fa-solid fa-money-bill-wave"></i> Confirmar Entrega y Cobro (${formatCOP(c.total)})</button>` :
-                    `<button class="btn btn-blue" style="width:100%; margin-top:8px; justify-content:center;" onclick="marcarEntregaDomiciliario('${c.id}', 'Entregado', true)"><i class="fa-solid fa-check"></i> Confirmar Entrega (Transferencia)</button>`;
+                    `<button class="btn btn-success" style="width:100%; margin-top:8px; justify-content:center; padding:12px;" onclick="marcarEntregaDomiciliario('${c.id}', 'Entregado', true)"><i class="fa-solid fa-money-bill-wave"></i> Confirmar Entrega y Cobro (${formatCOP(c.total)})</button>` :
+                    `<button class="btn btn-blue" style="width:100%; margin-top:8px; justify-content:center; padding:12px;" onclick="marcarEntregaDomiciliario('${c.id}', 'Entregado', true)"><i class="fa-solid fa-check"></i> Confirmar Entrega (Transferencia)</button>`;
 
                 box.innerHTML += `
                     <div class="card-delivery en-camino">
@@ -719,9 +775,9 @@
                             <strong>${c.id} - ${c.cliente}</strong>
                             <span class="badge badge-pending">${c.estadoEntrega || 'En Camino'}</span>
                         </div>
-                        <div style="font-size:0.85rem; margin-top:6px; line-height:1.4;">
+                        <div style="font-size:0.88rem; margin-top:8px; line-height:1.5;">
                             📍 <b>Dirección:</b> ${c.dir} <br>
-                            📞 <b>Teléfono:</b> <a href="https://wa.me/${c.tel}" target="_blank">${c.tel}</a> <br>
+                            📞 <b>Teléfono:</b> <a href="https://wa.me/${c.tel}" target="_blank" style="color:var(--blue); font-weight:bold;">${c.tel}</a> <br>
                             💳 <b>Pago:</b> ${c.metodoPago || 'Efectivo'} <br>
                             🥩 <b>Pedido:</b> ${c.pedido}
                         </div>
@@ -848,7 +904,7 @@
                 descontarInventarioPorItems(tempItemsComanda);
             }
 
-            localStorage.setItem('v15_comandas', JSON.stringify(comandas));
+            localStorage.setItem('v19_comandas', JSON.stringify(comandas));
             closeModal('m-comanda');
             render();
         }
@@ -859,7 +915,7 @@
                 if(com) restaurarInventarioPorItems(com.items);
 
                 comandas = comandas.filter(c => c.id !== id);
-                localStorage.setItem('v15_comandas', JSON.stringify(comandas));
+                localStorage.setItem('v19_comandas', JSON.stringify(comandas));
                 render();
             }
         }
@@ -876,7 +932,7 @@
                     }
                 }
             });
-            localStorage.setItem('v15_insumos', JSON.stringify(insumos));
+            localStorage.setItem('v19_insumos', JSON.stringify(insumos));
         }
 
         function restaurarInventarioPorItems(items) {
@@ -890,7 +946,7 @@
                     }
                 }
             });
-            localStorage.setItem('v15_insumos', JSON.stringify(insumos));
+            localStorage.setItem('v19_insumos', JSON.stringify(insumos));
         }
 
         function guardarInsumo() {
@@ -904,7 +960,7 @@
             if(!nombre) return alert('Ingresa un nombre de insumo.');
 
             insumos.push({ id: Date.now(), nombre, tipo, unidad, stock, min, costo });
-            localStorage.setItem('v15_insumos', JSON.stringify(insumos));
+            localStorage.setItem('v19_insumos', JSON.stringify(insumos));
             closeModal('m-insumo');
             render();
         }
@@ -915,14 +971,14 @@
             const cant = prompt(`Reponer stock para ${ins.nombre} (${ins.unidad}).`, '10');
             if(cant && !isNaN(cant)) {
                 ins.stock += parseFloat(cant);
-                localStorage.setItem('v15_insumos', JSON.stringify(insumos));
+                localStorage.setItem('v19_insumos', JSON.stringify(insumos));
                 render();
             }
         }
 
         function eliminarInsumo(id) {
             insumos = insumos.filter(i => i.id !== id);
-            localStorage.setItem('v15_insumos', JSON.stringify(insumos));
+            localStorage.setItem('v19_insumos', JSON.stringify(insumos));
             render();
         }
 
@@ -975,40 +1031,29 @@
                 productos.push({ id: Date.now(), nombre, costo, precio, insumoId });
             }
 
-            localStorage.setItem('v15_productos', JSON.stringify(productos));
+            localStorage.setItem('v19_productos', JSON.stringify(productos));
             closeModal('m-producto');
             render();
         }
 
         function eliminarProducto(id) {
             productos = productos.filter(p => p.id !== id);
-            localStorage.setItem('v15_productos', JSON.stringify(productos));
+            localStorage.setItem('v19_productos', JSON.stringify(productos));
             render();
         }
 
         // MENÚ CLIENTE
-        function copiarLinkMenu() {
-            navigator.clipboard.writeText(window.location.href);
-            alert('¡Enlace del Menú copiado! Envíalo a tus clientes.');
-        }
-
-        function compartirWhatsAppMenu() {
-            const link = window.location.href;
-            const msg = `¡Hola! 👋 Te compartimos nuestro Menú de Carnes & Picadas a Domicilio:\n\n👉 ${link}`;
-            window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
-        }
-
         function renderMenuCliente() {
             const box = document.getElementById('lista-productos-cliente');
             box.innerHTML = '';
             productos.forEach(p => {
                 box.innerHTML += `
-                    <div style="display:flex; justify-content:space-between; align-items:center; border:1px solid var(--border); padding:8px 12px; border-radius:6px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; border:1px solid var(--border); padding:10px 12px; border-radius:6px; background:#fff;">
                         <div>
                             <strong>${p.nombre}</strong> <br>
-                            <small style="color:#64748b;">${formatCOP(p.precio)}</small>
+                            <small style="color:#64748b; font-size:0.85rem;">${formatCOP(p.precio)}</small>
                         </div>
-                        <input type="number" min="0" value="0" data-precio="${p.precio}" data-costo="${p.costo}" data-nombre="${p.nombre}" data-insumoid="${p.insumoId || ''}" class="cant-item-cli" style="width:60px; padding:4px;" onchange="calcularTotalCliente()">
+                        <input type="number" min="0" value="0" data-precio="${p.precio}" data-costo="${p.costo}" data-nombre="${p.nombre}" data-insumoid="${p.insumoId || ''}" class="cant-item-cli" style="width:70px; padding:6px; font-size:1rem; text-align:center;" onchange="calcularTotalCliente()">
                     </div>
                 `;
             });
@@ -1067,7 +1112,7 @@
 
             comandas.push(nuevaComanda);
             descontarInventarioPorItems(itemsObj);
-            localStorage.setItem('v15_comandas', JSON.stringify(comandas));
+            localStorage.setItem('v19_comandas', JSON.stringify(comandas));
 
             const msgWpp = `¡Hola! Confirmo mi pedido:\n\n📌 *Cliente:* ${nombre}\n📞 *WhatsApp:* ${tel}\n📍 *Dirección:* ${dir}\n💳 *Método de Pago:* ${metodoPago}\n🥩 *Pedido:* ${pedidoStr}\n💰 *Total:* ${formatCOP(total)}`;
             window.open(`https://wa.me/?text=${encodeURIComponent(msgWpp)}`, '_blank');
@@ -1172,7 +1217,7 @@
             const monto = parseFloat(document.getElementById('ocr-monto').value) || 0;
 
             egresosDiarios.push({ id: Date.now(), tipo: "Egreso", concepto, monto, fecha: new Date().toLocaleString() });
-            localStorage.setItem('v15_egresos_diarios', JSON.stringify(egresosDiarios));
+            localStorage.setItem('v19_egresos_diarios', JSON.stringify(egresosDiarios));
 
             document.getElementById('ocr-result-box').style.display = 'none';
             document.getElementById('ocr-status').innerText = 'Gasto registrado en Egresos.';
@@ -1204,30 +1249,34 @@
             const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
             const link = document.createElement('a');
             link.href = URL.createObjectURL(blob);
-            link.setAttribute('download', 'reporte_gastronomico_v15.csv');
+            link.setAttribute('download', 'reporte_brazas_apartado.csv');
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
         }
 
         function guardarAPIKey() {
-            apiKey = document.getElementById('api-key-input').value;
-            localStorage.setItem('v15_api_key', apiKey);
-            alert('API Key de Gemini guardada.');
+            apiKey = document.getElementById('api-key-input').value.trim();
+            localStorage.setItem('v19_api_key', apiKey);
+            alert('✅ API Key de Gemini guardada correctamente.');
         }
 
-        // IA GEMINI
+        // IA GEMINI ACTUALIZADA
         async function llamarIA(prompt) {
             if(!apiKey) return "⚠️ Ingresa tu API Key en 'IA & Ajustes' para habilitar el asistente.";
             try {
-                const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
+                const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
                 });
                 const data = await res.json();
-                return data.candidates[0].content.parts[0].text;
-            } catch(e) { return "❌ Error al conectar con la IA."; }
+                if (data.candidates && data.candidates[0].content.parts[0].text) {
+                    return data.candidates[0].content.parts[0].text;
+                } else {
+                    return "⚠️ Ocurrió un inconveniente al procesar la respuesta. Verifica tu API Key.";
+                }
+            } catch(e) { return "❌ Error al conectar con la IA de Gemini."; }
         }
 
         async function enviarConsultaIA() {
@@ -1245,7 +1294,7 @@
             temp.innerText = 'Pensando...';
             chat.appendChild(temp);
 
-            const res = await llamarIA(`Eres un experto en cocinas ocultas de carnes en Colombia. Responde: "${msg}".`);
+            const res = await llamarIA(`Eres un experto en cocinas ocultas de carnes en Apartadó, Colombia. Responde a: "${msg}".`);
             temp.innerText = res;
             chat.scrollTop = chat.scrollHeight;
         }
@@ -1293,8 +1342,8 @@
                         <td>${formatCOP(i.costo)}</td>
                         <td>${badge}</td>
                         <td>
-                            <button class="btn btn-success" style="padding:4px 8px; font-size:0.75rem;" onclick="reponerStock(${i.id})"><i class="fa-solid fa-plus"></i></button>
-                            <button class="btn btn-danger" style="padding:4px 8px; font-size:0.75rem;" onclick="eliminarInsumo(${i.id})"><i class="fa-solid fa-trash"></i></button>
+                            <button class="btn btn-success" style="padding:6px 10px; font-size:0.8rem;" onclick="reponerStock(${i.id})"><i class="fa-solid fa-plus"></i></button>
+                            <button class="btn btn-danger" style="padding:6px 10px; font-size:0.8rem;" onclick="eliminarInsumo(${i.id})"><i class="fa-solid fa-trash"></i></button>
                         </td>
                     </tr>
                 `;
@@ -1317,8 +1366,8 @@
                         <td><span class="badge" style="background:#d1fae5; color:#047857;">${pct}%</span></td>
                         <td><small>${nombreIns}</small></td>
                         <td>
-                            <button class="btn btn-accent" style="padding:4px 8px; font-size:0.75rem;" onclick="editarProducto(${p.id})"><i class="fa-solid fa-pen"></i></button>
-                            <button class="btn btn-danger" style="padding:4px 8px; font-size:0.75rem;" onclick="eliminarProducto(${p.id})"><i class="fa-solid fa-trash"></i></button>
+                            <button class="btn btn-accent" style="padding:6px 10px; font-size:0.8rem;" onclick="editarProducto(${p.id})"><i class="fa-solid fa-pen"></i></button>
+                            <button class="btn btn-danger" style="padding:6px 10px; font-size:0.8rem;" onclick="eliminarProducto(${p.id})"><i class="fa-solid fa-trash"></i></button>
                         </td>
                     </tr>
                 `;
@@ -1338,9 +1387,9 @@
                         <td>${badgeEst}</td>
                         <td><b>${formatCOP(c.total)}</b></td>
                         <td>
-                            <button class="btn btn-accent" style="padding:4px 8px; font-size:0.75rem;" onclick="editarComanda('${c.id}')"><i class="fa-solid fa-pen"></i></button>
-                            <button class="btn btn-danger" style="padding:4px 8px; font-size:0.75rem;" onclick="eliminarComanda('${c.id}')"><i class="fa-solid fa-trash"></i></button>
-                            <button class="btn btn-outline" style="padding:4px 8px; font-size:0.75rem;" onclick="imprimirUniversal('${c.id}')"><i class="fa-solid fa-print"></i></button>
+                            <button class="btn btn-accent" style="padding:6px 10px; font-size:0.8rem;" onclick="editarComanda('${c.id}')"><i class="fa-solid fa-pen"></i></button>
+                            <button class="btn btn-danger" style="padding:6px 10px; font-size:0.8rem;" onclick="eliminarComanda('${c.id}')"><i class="fa-solid fa-trash"></i></button>
+                            <button class="btn btn-outline" style="padding:6px 10px; font-size:0.8rem;" onclick="imprimirUniversal('${c.id}')"><i class="fa-solid fa-print"></i></button>
                         </td>
                     </tr>
                 `;
